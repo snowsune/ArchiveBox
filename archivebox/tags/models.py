@@ -17,8 +17,18 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 
+def _get_base_model_components():
+    from archivebox.base_models.models import (
+        ABIDModel,
+        ABIDField,
+        AutoDateTimeField,
+        get_or_create_system_user_pk,
+    )
+    
+    return ABIDModel, ABIDField, AutoDateTimeField, get_or_create_system_user_pk
 
-from base_models.models import ABIDModel, ABIDField, AutoDateTimeField, get_or_create_system_user_pk
+# Lazy loading (resolve after loading module)
+ABIDModel, ABIDField, AutoDateTimeField, get_or_create_system_user_pk = _get_base_model_components()
 
 FORBIDDEN_TAG_CHARS = ('=', '\n', '\t', '\r', ',', '\'', '"', '\\')
 
